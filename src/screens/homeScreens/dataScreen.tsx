@@ -20,7 +20,7 @@ const DataScreen = ({navigation, route}: Props) => {
       AsyncStorage.getItem('userDetails').then(value => {
         if (value != null) {
           let data = JSON.parse(value);
-          setUserData(data?.userName);
+          setUserData(data);
         }
       });
     } catch (e) {
@@ -46,8 +46,8 @@ const DataScreen = ({navigation, route}: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.welcomeText}>Welcome {userData} !</Text>
-
+      <Text style={styles.welcomeText}>Email :{userData?.email} </Text>
+      <Text style={styles.welcomeText}>Password : {userData?.password} </Text>
       <Pressable style={styles.logoutButton} onPress={() => setDrawer(true)}>
         <Text style={styles.logoutButtonText}>LOGOUT</Text>
       </Pressable>
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 24,
     color: 'white',
+    marginBottom: 10,
   },
   logoutButton: {
     color: 'white',

@@ -17,7 +17,7 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList>;
 
 const Login = ({navigation, route}: Props) => {
-  const [userName, setUserName] = React.useState('');
+  const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   //getting data from async storage
@@ -49,13 +49,14 @@ const Login = ({navigation, route}: Props) => {
   //handling login button
 
   const handleLogin = ({}) => {
-    if (userName.length < 3) {
-      Alert.alert('Invalid UserName');
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    if (reg.test(email) === false) {
+      Alert.alert('Invalid Email');
     } else if (password.length < 8) {
       Alert.alert('Password must be at least 8 characters');
     } else {
       const value = {
-        userName: userName,
+        email: email,
         password: password,
       };
       storeData(value);
@@ -73,9 +74,9 @@ const Login = ({navigation, route}: Props) => {
       <Text style={styles.headerText}>Login Screen</Text>
       <TextInput
         style={styles.textInput}
-        placeholder="User Name"
+        placeholder="Email Id"
         onChangeText={value => {
-          setUserName(value);
+          setEmail(value);
         }}
       />
       <TextInput
