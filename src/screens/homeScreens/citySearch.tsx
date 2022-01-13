@@ -14,6 +14,7 @@ type filteredData = {
 };
 
 const CitySearch = () => {
+  //managing local states
   const [text, onChangeText] = React.useState('');
   const [processedData, setProcessedData] = React.useState<any>([]);
 
@@ -78,6 +79,7 @@ const CitySearch = () => {
   ];
 
   //search handle
+
   const handleChange = (text: string) => {
     onChangeText(text);
     const length = text.length;
@@ -88,6 +90,7 @@ const CitySearch = () => {
   };
 
   //item component
+
   const Item = ({title}: filteredData) => (
     <View style={styles.item}>
       <Text style={styles.title}>{title}</Text>

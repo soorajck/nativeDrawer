@@ -11,9 +11,11 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList>;
 
 const DataScreen = ({navigation, route}: Props) => {
+  ///getting states from zustad
   const setLoggedIn = useStore(state => state.setLoggedIn);
   const data = useStore(state => state.data);
-  console.log(data);
+
+  //managing local states
   const [userData, setUserData] = useState<any>(false);
   const [drawer, setDrawer] = useState(false);
 
@@ -31,6 +33,7 @@ const DataScreen = ({navigation, route}: Props) => {
       Alert.alert('Fetching data failed');
     }
   };
+
   //calling fetting data from async storage function
   useEffect(() => {
     getDataFromAsyncStorage();

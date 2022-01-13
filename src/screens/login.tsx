@@ -19,7 +19,10 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList>;
 
 const Login = ({navigation, route}: Props) => {
+  //states from zustad store
   const setData = useStore(state => state.setData);
+
+  //managing local states
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -71,6 +74,7 @@ const Login = ({navigation, route}: Props) => {
   // useEffect(() => {
   //   getDataFromAsyncStorage();
   // }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Login Screen</Text>

@@ -22,9 +22,12 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList>;
 
 const Profile = ({navigation, route}: Props) => {
+  //states from zustad store
   const setLoggedIn = useStore(state => state.setLoggedIn);
   const setData = useStore(state => state.setData);
   const data = useStore(state => state.data);
+
+  //managing local states
   const [userName, setUserName] = React.useState('');
 
   //date picker functions and items

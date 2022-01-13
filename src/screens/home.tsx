@@ -3,8 +3,9 @@ import {Image, StyleSheet} from 'react-native';
 import {DataScreen, CitySearch} from './homeScreens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
+//creating tab navidation
 const Tab = createBottomTabNavigator();
-
+//this file is only for the bottom tab navigation
 const Home = () => {
   return (
     <Tab.Navigator>

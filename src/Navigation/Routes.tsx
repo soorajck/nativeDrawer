@@ -5,14 +5,15 @@ import {Login, Home, Profile} from '../screens';
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useStore from '../store/useStore';
+
+//stack creation for navigation
 const Stack = createNativeStackNavigator();
 
 function Routes() {
+  //states from zustad store
   const loggedIn = useStore(state => state.loggedIn);
-  console.log(loggedIn);
   const setLoggedIn = useStore(state => state.setLoggedIn);
   //getting data from async storage
-
   const getDataFromAsyncStorage = async () => {
     try {
       AsyncStorage.getItem('userDetails').then(value => {
@@ -26,6 +27,8 @@ function Routes() {
       Alert.alert('Fetching data failed');
     }
   };
+
+  //running fetch data from asycn storage
 
   React.useEffect(() => {
     getDataFromAsyncStorage();
