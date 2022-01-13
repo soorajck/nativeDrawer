@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 import {View, Text, StyleSheet, Pressable, Modal, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -10,7 +10,7 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList>;
 
 const DataScreen = ({navigation, route}: Props) => {
-  const [userData, setUserData] = useState<any>('');
+  const [userData, setUserData] = useState<any>(false);
   const [drawer, setDrawer] = useState(false);
 
   //getting data from async storage
@@ -35,9 +35,11 @@ const DataScreen = ({navigation, route}: Props) => {
   //clearing login data
 
   const Logout = async () => {
+    setDrawer(false);
     try {
       await AsyncStorage.removeItem('userDetails');
       setUserData('');
+
       navigation.navigate('Login');
     } catch (e) {
       Alert.alert('Logout Failed');
@@ -46,8 +48,9 @@ const DataScreen = ({navigation, route}: Props) => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.welcomeText}>Hi {userData?.userName!} </Text>
       <Text style={styles.welcomeText}>Email :{userData?.email} </Text>
-      <Text style={styles.welcomeText}>Password : {userData?.password} </Text>
+      <Text style={styles.welcomeText}>Dob : {userData?.dob} </Text>
       <Pressable style={styles.logoutButton} onPress={() => setDrawer(true)}>
         <Text style={styles.logoutButtonText}>LOGOUT</Text>
       </Pressable>

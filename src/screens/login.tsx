@@ -13,6 +13,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 type RootStackParamList = {
   Login: undefined;
   Home: undefined;
+  Profile: undefined;
 };
 type Props = NativeStackScreenProps<RootStackParamList>;
 
@@ -20,27 +21,13 @@ const Login = ({navigation, route}: Props) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  //getting data from async storage
-
-  const getDataFromAsyncStorage = async () => {
-    try {
-      AsyncStorage.getItem('userDetails').then(value => {
-        if (value != null) {
-          navigation.navigate('Home');
-        }
-      });
-    } catch (e) {
-      Alert.alert('Fetching data failed');
-    }
-  };
-
   //handling storing in asynch storage
 
   const storeData = async (value: {}) => {
     try {
       const jsonValue = JSON.stringify(value);
       await AsyncStorage.setItem('userDetails', jsonValue);
-      navigation.navigate('Home');
+      navigation.navigate('Profile');
     } catch (e) {
       Alert.alert('saving data failed');
     }
@@ -62,13 +49,25 @@ const Login = ({navigation, route}: Props) => {
       storeData(value);
     }
   };
-
   //redirect to home if login already
+
+  //getting data from async storage
+
+  const getDataFromAsyncStorage = async () => {
+    try {
+      AsyncStorage.getItem('userDetails').then(value => {
+        if (value != null) {
+          navigation.navigate('Home');
+        }
+      });
+    } catch (e) {
+      Alert.alert('Fetching data failed');
+    }
+  };
 
   useEffect(() => {
     getDataFromAsyncStorage();
   }, []);
-
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Login Screen</Text>
