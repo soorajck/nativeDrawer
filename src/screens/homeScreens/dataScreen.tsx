@@ -2,6 +2,7 @@ import React, {useState, useEffect, useLayoutEffect} from 'react';
 import {View, Text, StyleSheet, Pressable, Modal, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import useStore from '../../store/useStore';
 
 type RootStackParamList = {
   Home: undefined;
@@ -10,6 +11,9 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList>;
 
 const DataScreen = ({navigation, route}: Props) => {
+  const setLoggedIn = useStore(state => state.setLoggedIn);
+  const data = useStore(state => state.data);
+  console.log(data);
   const [userData, setUserData] = useState<any>(false);
   const [drawer, setDrawer] = useState(false);
 
@@ -35,6 +39,7 @@ const DataScreen = ({navigation, route}: Props) => {
   //clearing login data
 
   const Logout = async () => {
+    setLoggedIn(false);
     setDrawer(false);
     try {
       await AsyncStorage.removeItem('userDetails');
@@ -46,11 +51,31 @@ const DataScreen = ({navigation, route}: Props) => {
     }
   };
 
+  //getting age from dob
+
+  const getExactAge = (dob: string) => {
+    let today = new Date();
+    let birthDate = new Date(dob);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    let m = today.getMonth() - birthDate.getMonth();
+    if (m < 0) {
+      return age - 1;
+    } else {
+      return age;
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.welcomeText}>Hi {userData?.userName!} </Text>
-      <Text style={styles.welcomeText}>Email :{userData?.email} </Text>
-      <Text style={styles.welcomeText}>Dob : {userData?.dob} </Text>
+      <Text style={styles.welcomeText}>
+        Hi {data?.userName! || userData?.userName}{' '}
+      </Text>
+      <Text style={styles.welcomeText}>
+        Email :{data?.email || userData?.email}{' '}
+      </Text>
+      <Text style={styles.welcomeText}>
+        Age : {getExactAge(data?.dob || userData?.dob)}{' '}
+      </Text>
       <Pressable style={styles.logoutButton} onPress={() => setDrawer(true)}>
         <Text style={styles.logoutButtonText}>LOGOUT</Text>
       </Pressable>

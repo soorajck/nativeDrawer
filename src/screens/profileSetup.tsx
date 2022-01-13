@@ -11,19 +11,20 @@ import {
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
+import useStore from '../store/useStore';
 
 type RootStackParamList = {
   Login: undefined;
   Home: undefined;
   Profile: undefined;
 };
-type OnChangeType = {
-  event: Event;
-  selectedDate?: Date | undefined;
-};
+
 type Props = NativeStackScreenProps<RootStackParamList>;
 
 const Profile = ({navigation, route}: Props) => {
+  const setLoggedIn = useStore(state => state.setLoggedIn);
+  const setData = useStore(state => state.setData);
+  const data = useStore(state => state.data);
   const [userName, setUserName] = React.useState('');
 
   //date picker functions and items
@@ -60,6 +61,8 @@ const Profile = ({navigation, route}: Props) => {
         dob: moment(date).format('L'),
       };
       storeData(value);
+      //setLoggedIn(true);
+      setData(value);
     }
   };
 

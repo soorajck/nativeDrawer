@@ -9,6 +9,7 @@ import {
   Pressable,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import useStore from '../store/useStore';
 
 type RootStackParamList = {
   Login: undefined;
@@ -18,6 +19,7 @@ type RootStackParamList = {
 type Props = NativeStackScreenProps<RootStackParamList>;
 
 const Login = ({navigation, route}: Props) => {
+  const setData = useStore(state => state.setData);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -47,27 +49,28 @@ const Login = ({navigation, route}: Props) => {
         password: password,
       };
       storeData(value);
+      setData(value);
     }
   };
   //redirect to home if login already
 
   //getting data from async storage
 
-  const getDataFromAsyncStorage = async () => {
-    try {
-      AsyncStorage.getItem('userDetails').then(value => {
-        if (value != null) {
-          navigation.navigate('Home');
-        }
-      });
-    } catch (e) {
-      Alert.alert('Fetching data failed');
-    }
-  };
+  // const getDataFromAsyncStorage = async () => {
+  //   try {
+  //     AsyncStorage.getItem('userDetails').then(value => {
+  //       if (value != null) {
+  //         navigation.navigate('Home');
+  //       }
+  //     });
+  //   } catch (e) {
+  //     Alert.alert('Fetching data failed');
+  //   }
+  // };
 
-  useEffect(() => {
-    getDataFromAsyncStorage();
-  }, []);
+  // useEffect(() => {
+  //   getDataFromAsyncStorage();
+  // }, []);
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Login Screen</Text>
