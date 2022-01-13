@@ -82,7 +82,7 @@ const Profile = ({navigation, route}: Props) => {
 
       <View style={styles.datePickerContainer}>
         <Text style={styles.dobText}>Select Date of Birth</Text>
-        <View>
+        <View style={styles.dateContainer}>
           <DateTimePicker
             testID="dateTimePicker"
             value={date}
@@ -145,6 +145,13 @@ const styles = StyleSheet.create({
   loginButtonText: {
     color: 'white',
     fontSize: 16,
+  },
+  dateContainer: {
+    //display: 'flex',
+    position: 'relative',
+    right: 20,
+    color: 'white',
+    marginTop: 10,
   },
 });
 export default Profile;
